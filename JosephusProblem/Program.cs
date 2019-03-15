@@ -15,42 +15,50 @@ namespace JosephusProblem
                 Console.WriteLine("The Beginning");
                 Console.WriteLine($"we are starting with {numberOfPeople} people.");
                 Console.WriteLine($"The killing interval is {killingInterval}.");
-                Console.WriteLine("___________________");
                 Console.WriteLine("");
 
-                foreach (int num in numRange)
+                var circleOfPeople = new List<int>();
+
+                for (var i = 1; i <= numberOfPeople; i++)
                 {
-                    Console.WriteLine(num);
+                    circleOfPeople.Add(i);
                 }
 
-                List<int> rangeList = numRange.ToList();
+                int Counter = 1;
+                int roundNum = 1;
 
-                Console.WriteLine("");
-                int peopleLeft = rangeList.Count;
-                var indexOfInterval = rangeList[killingInterval] - 2;
-
-                while (peopleLeft >= killingInterval)
+                do
                 {
-                    var roundNum = 0;
-                    roundNum++;
-
-                    rangeList.RemoveAt(indexOfInterval);
-
-                    Console.WriteLine($"Round {roundNum}");
-                    Console.WriteLine("___________________");
-                    Console.WriteLine("");
-
-                    foreach (int num in rangeList)
+                    for (var i = 0; i < circleOfPeople.Count; i++)
                     {
-                        Console.WriteLine(num);
+                        if (Counter == killingInterval)
+                        {
+                            circleOfPeople.RemoveAt(0);
+                            Counter = 1;
+                            Console.WriteLine($"Round {roundNum}");
+                            Console.WriteLine("___________________");
+                            Console.WriteLine("");
+                            roundNum++;
+                            foreach(int person in circleOfPeople)
+                            {
+                                Console.WriteLine(person);
+                            }
+                            Console.WriteLine("");
+                        }
+                        else
+                        {
+                            circleOfPeople.Add(circleOfPeople[0]);
+                            circleOfPeople.RemoveAt(0);
+                            Counter++;
+                            i--;
+                        }
                     }
-                    Console.WriteLine($"There are only {peopleLeft} people left.");
-                    Console.ReadLine();
                 }
-                    Console.ReadLine();
+                while (circleOfPeople.Count > 1);
+                Console.WriteLine($"The last person standing is in the number {circleOfPeople[0]} position.");
             }
-
             LastPersonStanding(10, 3);
+            Console.ReadLine();
+            }
         }
     }
-}
